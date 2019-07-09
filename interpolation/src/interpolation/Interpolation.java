@@ -85,14 +85,14 @@ public class Interpolation extends Polinomial_Function{
         double[][] m = createMatrix();
         double determinante = calc_determinant(m);
         double[] coeff = new double[5];
-        System.out.println("il determinante è:"+calc_determinant(m));
+        //System.out.println("il determinante è:"+calc_determinant(m));
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 m[j][i] = summation(xi,yi, 4-j);
             }
             coeff[i] = calc_determinant(m);
             m = createMatrix();
-            System.out.println();
+            //System.out.println();
         }
         assignment:{
             if(determinante==0) {
@@ -105,7 +105,7 @@ public class Interpolation extends Polinomial_Function{
                 coeff[i] = coeff[i]/determinante;
                 //System.out.println(bg);
                 //coeff[i] = bg.doubleValue();
-                System.out.println(i+1+":"+coeff[i]);
+                //System.out.println(i+1+":"+coeff[i]);
             }
             a = coeff[0];
             b = coeff[1];
@@ -172,7 +172,7 @@ public class Interpolation extends Polinomial_Function{
         points.add(point);
         xi.add(point.getX());
         yi.add(point.getY());
-        System.out.println("point added:"+point);
+        //System.out.println("point added:"+point);
         calc_interpolation();
     }
     
