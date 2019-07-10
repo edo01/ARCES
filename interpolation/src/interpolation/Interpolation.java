@@ -64,7 +64,7 @@ public class Interpolation extends Polinomial_Function{
         for(int i = 0; i<points.size(); i++){
             xi.add(((Point)points.elementAt(i)).getX());
             yi.add(((Point)points.elementAt(i)).getY());
-            System.out.println("point:"+(Point)points.elementAt(i));
+            //System.out.println("point:"+(Point)points.elementAt(i));
         }
         /*calculating the parameters of the interpolation function from the
          * points given.
@@ -172,7 +172,7 @@ public class Interpolation extends Polinomial_Function{
         points.add(point);
         xi.add(point.getX());
         yi.add(point.getY());
-        //System.out.println("point added:"+point);
+        System.out.println("point added:"+point);
         calc_interpolation();
     }
     

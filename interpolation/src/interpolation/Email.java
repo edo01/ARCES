@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * install two libraries: JavaServer Faces 1.1.01 and JavaMail API 1.4.1 from:
+ * https://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-eeplat-419426.html#javamail-1.4.1-oth-JPR
+ * 
  */
 package interpolation;
 
@@ -20,24 +20,44 @@ public class Email {
     
     private String addressee = "edocarra012@gmail.com";
     private String subject = "ARCES SAPA SENSOR ALARM";
-    private String body = "The SAPA system is warning you,<br>"
-            + "your SENSOR has exceed the threshold, pay attention.";
+    private String sensorKey = "sensor";
+    private String body = "The SAPA alarm system is warning you,<br>"+ sensorKey
+            + " has exceed the limit threshold, pay attention.";
     private Properties mailServerProperties;
     private Session getMailSession;
     private MimeMessage generateMailMessage;
     
     private String sender = "edocarra012@gmail.com";
     private String password = "******";
-
-    public Email(String addressee, String subject, String body) {
+    
+    public static final int gravityHIGHKEY =3;
+    public static final int gravityMIDDLEKEY =2;
+    public static final int gravityLOWKEY =1;
+    
+    private final String gravityHIGH = sensorKey
+            + " has exceeded the limit threshold, pay attention.";
+    private final String gravityMIDDLE = sensorKey
+            + " will exceed the limit threshold, pay attention.";
+    private final String gravityLOW = sensorKey
+            + " there something strange, it was noticed a variation of the datas"
+            + ", pay attention.";
+    
+    
+    public Email(String addressee, String subject, String body,
+            String sensorKey) {
         this.addressee = addressee;
         this.subject = subject;
         this.body = body;
     }
     
+    public Email(String sensorKey) {
+        this.sensorKey = sensorKey;
+    }
+    
+    
     public Email() {}
 
-    public void sendEmail(){
+    public void sendEmail(int gravityKey){
         // Step1
 		System.out.println("\n 1st ===> setup Mail Server Properties..");
 		mailServerProperties = System.getProperties();
@@ -53,7 +73,19 @@ public class Email {
 		try{
                     generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(addressee));
                     generateMailMessage.setSubject(subject);
-                    generateMailMessage.setContent(body, "text/html");
+                    switch(gravityKey){
+                        case gravityHIGHKEY:
+                            generateMailMessage.setContent(gravityHIGH, "text/html");
+                            break;
+                        case gravityMIDDLEKEY:
+                            generateMailMessage.setContent(gravityMIDDLE, "text/html");
+                            break;
+                        case gravityLOWKEY:
+                            generateMailMessage.setContent(gravityLOW, "text/html");
+                            break;
+                        default:
+                            generateMailMessage.setContent(body, "text/html");
+                    }
                     System.out.println("Mail Session has been created successfully..");
 
                     // Step3
@@ -68,6 +100,14 @@ public class Email {
                 }catch(MessagingException ex){
                     ex.printStackTrace();
                 }
+    }
+
+    public String getSensorKey() {
+        return sensorKey;
+    }
+
+    public void setSensorKey(String sensorKey) {
+        this.sensorKey = sensorKey;
     }
 
     public String getPassword() {

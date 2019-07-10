@@ -90,12 +90,35 @@ public class Polinomial_Function {
         return a*Math.pow(x, 4)+b*Math.pow(x, 3)+c*Math.pow(x, 2)+d*x+e;
     }
     
+    public double averageValueInRange(int from, int to){
+        if(to-from<0){
+            double t = to;
+            to = from;
+            from = to;
+        }
+        double somma=0;
+        for (int i = from; i <=to; i++) {
+            somma += valueIn(i);
+        }
+        return somma/(to-from);
+    }
+    
+    public double toBeTheNumber(double number,int start, int threshold){
+        for (int i = start; i < start+threshold; i++) {
+            if(valueIn(i)<number){
+                return i;
+            }
+        }
+        return 0;
+    }
+    
     /**
      * 
      * @return the explicit form of the interpolative function
      */
     @Override
     public String toString() {
+        //return a+"\n"+b+"\n"+c+"\n"+d+"\n"+e;
         return "Interpolation function: f(x) = ("+a+")x^4 + ("+b+")x^3 + ("+c+")x^2 + ("+d+")x + ("+e+")";
     }
 }

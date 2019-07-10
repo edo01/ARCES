@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * General cartesian point format: P(x,y).
  */
 package interpolation;
 
@@ -10,6 +8,11 @@ package interpolation;
  * @author Edoardo Carrà
  */
 public class Point {
+    //TODO: handle polar coordinates
+    
+    /**
+     * Cartesian format P(x,y).
+     */
     private double x,y;
     
     public Point(double x, double y){
