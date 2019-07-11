@@ -2,6 +2,7 @@
   <h1>ALARM GENERATOR</h1>
 </div>
 How to use it:<br>
+Add to your project the three libraries inside /interpolation/lib/.
 1)Import the library:<br>
 
   ```java
@@ -48,6 +49,5 @@ How to use it:<br>
  It's also possible create several alarms generator, on the same machine listening on different sensor, at the same time!!
  
  <br><br><br>
- <div align="right">
-  developed by Edoardo Carrà in collaboration with [**ARCES**](http://www.arces.unibo.it), the *Advanced Research Center on Electronic Systems "Ercole De Castro"* of the [**University of Bologna**](http://www.unibo.it).
- </div>
+ developed by Edoardo Carrà in collaboration with [ARCES](http://www.arces.unibo.it), the *Advanced Research Center on Electronic Systems "Ercole De Castro"* of the [University of Bologna](http://www.unibo.it).
+ 
