@@ -34,6 +34,7 @@ public class SubscriptionAlarmGenerator implements Runnable{
     //to calculate the measures saved.
     private int saved = 0;
     private Vector v;
+    private String broker = "tcp://giove.arces.unibo.it:52877";
 
     /**
      * 
@@ -43,13 +44,25 @@ public class SubscriptionAlarmGenerator implements Runnable{
     public SubscriptionAlarmGenerator(String topic, Alarm alarm) {
         this.topic = topic;
         this.alarm = alarm;
-       function = new Interpolation();
+        function = new Interpolation();
+        v = new Vector();
+    }
+    /**
+     * 
+     * @param topic of the subscription.
+     * @param alarm to set on the sensor measures.
+     * @param broker the address of the broker server
+     */
+    public SubscriptionAlarmGenerator(String topic, Alarm alarm,String broker) {
+        this.topic = topic;
+        this.alarm = alarm;
+        this.broker = broker;
+        function = new Interpolation();
         v = new Vector();
     }
     
     @Override
     public void run() {
-            String broker       = "tcp://giove.arces.unibo.it:52877";
             String clientId     = "Alarm for "+topic;
 
             try {
@@ -70,6 +83,10 @@ public class SubscriptionAlarmGenerator implements Runnable{
                     @Override
                     public void messageArrived(String topic, MqttMessage message) throws Exception {
                         System.out.println(topic + ": " + message);
+                        if(alarm.isWithPrediction()) {
+                            alarm.firstGradeAlarm(Double.parseDouble(message.toString()));
+                            return;
+                        }
                         saved++;
                         if (saved==alarm.getRange()) {
                             function.setPoints(v);
@@ -101,4 +118,12 @@ public class SubscriptionAlarmGenerator implements Runnable{
                 }
         } while (true);        
     }    
+
+    public String getBroker() {
+        return broker;
+    }
+
+    public void setBroker(String broker) {
+        this.broker = broker;
+    }
 }
