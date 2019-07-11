@@ -1,7 +1,7 @@
 /*
  * Interpolation function of given points.
  */
-package interpolation;
+package it.unibo.arces.wot.sepa.apps.alarmgenerator.model;
 
 import java.util.Vector;
 
@@ -9,7 +9,7 @@ import java.util.Vector;
  *
  * @author Edoardo Carrà
  */
-public class Interpolation extends Polinomial_Function{
+public class Interpolation extends Polynomial_Function{
     
     /**
      * Array of the points from which to calculate the 
@@ -20,9 +20,7 @@ public class Interpolation extends Polinomial_Function{
      * The points split in their coordinates x and y.
      */
     private Vector xi, yi;
-    /**
-     * Parameters of the interpolative function(ax^4+bx^3+cx^2+dx+e).
-     */    
+    
     
     /**
      * 
@@ -45,7 +43,7 @@ public class Interpolation extends Polinomial_Function{
         calc_interpolation();
     }
 
-    Interpolation() {
+    public Interpolation() {
         super();
         points = new Vector();
         xi = new Vector();
@@ -183,5 +181,4 @@ public class Interpolation extends Polinomial_Function{
     public double[] getParameters(){
         return new double[]{a,b,c,d,e};
     }
-
 }

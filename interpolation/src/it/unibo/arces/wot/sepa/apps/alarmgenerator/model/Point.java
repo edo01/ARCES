@@ -1,7 +1,7 @@
 /*
  * General cartesian point format: P(x,y).
  */
-package interpolation;
+package it.unibo.arces.wot.sepa.apps.alarmgenerator.model;
 
 /**
  *

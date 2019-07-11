@@ -1,33 +1,43 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * A generic polynomial function.
  */
-package interpolation;
+package it.unibo.arces.wot.sepa.apps.alarmgenerator.model;
 
 /**
  *
  * @author Edoardo Carrà
  */
-public class Polinomial_Function {
-    
+public class Polynomial_Function {
+    /**
+     * Parameters of the interpolative function(ax^4+bx^3+cx^2+dx+e).
+     */    
     protected double a,b,c,d,e;
 
-    public Polinomial_Function(double a, double b, double c, double d, double e) {
+    /**
+     * function(ax^4+bx^3+cx^2+dx+e).
+     */
+    public Polynomial_Function(double a, double b, double c, double d, double e) {
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
         this.e = e;
     }
-    
-    public Polinomial_Function(){
+    /**
+     * The function will be f(x)=0.
+     */
+    public Polynomial_Function(){
         this.a = this.b = this.c = this.d = this.e = 0;
     }
     
-    public Polinomial_Function calc_derivative(int n){
+    /**
+     * calculates the n-derivative of a Polynomial_Function.
+     * @param n
+     * @return 
+     */
+    public Polynomial_Function calc_derivative(int n){
         if(n<1) return this;
-        if(n>4) return new Polinomial_Function();
+        if(n>4) return new Polynomial_Function();
         double a=this.a;
         double b=this.b;
         double c=this.c;
@@ -40,16 +50,19 @@ public class Polinomial_Function {
             if(d!=0) d*=1-i;
         }
         if(b==0 && c==0 && d==0) 
-            return new Polinomial_Function(0, 0, 0, 0, a);
+            return new Polynomial_Function(0, 0, 0, 0, a);
         else if(c==0 && d==0)
-            return new Polinomial_Function(0, 0, 0, a, b);
+            return new Polynomial_Function(0, 0, 0, a, b);
         else if(d==0)
-            return new Polinomial_Function(0, 0, a, b, c);
+            return new Polynomial_Function(0, 0, a, b, c);
         else
-            return new Polinomial_Function(0, a, b, c, d);
+            return new Polynomial_Function(0, a, b, c, d);
     }
-    
-    @Deprecated
+    /**
+     * working in progress.
+     * @return
+     * @deprecated
+     */
     public double[] when_positive(){
         double[] solutions = new double[4];
         double q = 12 * a * e - 3 * b * d + Math.pow(c, 2);
@@ -81,15 +94,28 @@ public class Polinomial_Function {
         if(isZero(solutions[1])) System.out.println("soluzione 4 buona");
         return solutions;
     }
-    
+    /**
+     * If x is a zero of the function.
+     * @param x 
+     * @return 
+     */
     public boolean isZero(double x){
         return a*Math.pow(x, 4)+b*Math.pow(x, 3)+c*Math.pow(x, 2)+d*x+e==0;
     }
-    
+    /**
+     * The value in x.
+     * @param x
+     * @return 
+     */
     public double valueIn(double x){
         return a*Math.pow(x, 4)+b*Math.pow(x, 3)+c*Math.pow(x, 2)+d*x+e;
     }
-    
+    /**
+     * The average value of the integer numbers of an interval.
+     * @param from the starting number.
+     * @param to the last number.
+     * @return the average value.
+     */
     public double averageValueInRange(int from, int to){
         if(to-from<0){
             double t = to;
@@ -102,7 +128,10 @@ public class Polinomial_Function {
         }
         return somma/(to-from);
     }
-    
+    /**
+     * Working in progress. 
+     * @deprecated
+     */
     public double toBeTheNumber(double number,int start, int threshold){
         for (int i = start; i < start+threshold; i++) {
             if(valueIn(i)<number){

@@ -1,27 +1,63 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package interpolation;
+package it.unibo.arces.wot.sepa.apps.alarmgenerator.model;
+
+import it.unibo.arces.wot.sepa.apps.alarmgenerator.model.Polynomial_Function;
+import it.unibo.arces.wot.sepa.apps.alarmgenerator.model.Point;
+import it.unibo.arces.wot.sepa.apps.alarmgenerator.model.Interpolation;
 
 /**
  *
  * @author Edoardo Carrà
  */
 public class Prediction {
+    /**
+     * The prediction is calculated like grade:
+     * f'(x).averageInRange(range)*NumberOfMeasuresBeforeThePrediction+f(startingNumber)
+     */
     public final short averageOfDerivative1 = 1;
+    /**
+     * The prediction is calculated like Taylor polynomial of second grade:
+     * f(startingNumber)+f'(x).averageInRange(range)*NumberOfMeasuresBeforeThePrediction+0.5*f''(x).averageInRange(range)*(NumberOfMeasuresBeforeThePrediction)^2
+     */
     public final short averageOfDerivative1and2 = 2;
+    /**
+     *  The prediction is calculated like Taylor polynomial of first grade:
+     *  f'(startingNumber)*NumberOfMeasuresBeforeThePrediction+f(startingNumber)
+     */
     public final short derivative1 = 3;
+    /**
+     * The prediction is calculated like Taylor polynomial of second grade:
+     * f(startingNumber)+f'(startingNumber)*NumberOfMeasuresBeforeThePrediction+0.5*f''(startingNumber)(NumberOfMeasuresBeforeThePrediction)^2 
+     */
     public final short derivative1and2 = 4;
     
+    /**
+     * What kind of prediction is set.
+     */
     private short key; 
     
-    private int starting_number;
-    private int L_limit, G_limit, range;
-    private double prediction;
-    private double error = 0;
+    /**
+     * the X value of the point.
+     */
+    private final int starting_number;
     
+    private final int L_limit;
+    private final int G_limit;
+    private final int range;
+    /**
+     * The value of the prediction.
+     */
+    private double prediction;
+    /**
+     * the sum of all the deviations during all the updates.
+     */
+    private double error = 0;
+    /**
+     * 
+     * @param key What kind of prediction is set.
+     * @param from the starting prediction point.
+     * @param lower_limit
+     * @param greater_limit 
+     */
     public Prediction(short key, int from, int lower_limit , int greater_limit){
         switch(key){
             case averageOfDerivative1:
@@ -51,9 +87,14 @@ public class Prediction {
     }
        
     //la previsione è sul numero finale del prossimo range preso in considerazione
+    /**
+     * Predict the last number of the next range.
+     * @param function
+     * @return the prediction based on the key.
+     */
     public double calcPrediction(Interpolation function){
-        Polinomial_Function derivata1 = function.calc_derivative(1);
-        Polinomial_Function derivata2 = function.calc_derivative(2);
+        Polynomial_Function derivata1 = function.calc_derivative(1);
+        Polynomial_Function derivata2 = function.calc_derivative(2);
         switch(key){
             case averageOfDerivative1:
                 prediction = derivata1.averageValueInRange(L_limit, G_limit)*
@@ -82,6 +123,10 @@ public class Prediction {
         return prediction;
     }
     
+    /**
+     * Updates the total deviations.
+     * @param function 
+     */
     public void updateError(Interpolation function){
         error += Math.abs(prediction-
                     ((Point)(function.getPoints().lastElement())).getY());
@@ -93,6 +138,10 @@ public class Prediction {
 
     public double getError() {
         return error;
+    }
+
+    public void setKey(short key) {
+        this.key = key;
     }
 
     @Override

@@ -2,8 +2,11 @@
  * install two libraries: JavaServer Faces 1.1.01 and JavaMail API 1.4.1 from:
  * https://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-eeplat-419426.html#javamail-1.4.1-oth-JPR
  * 
+ * For now the class works only for Gmail account.
+ * TODO:
+ *  -try other email account(not gmail account);
  */
-package interpolation;
+package it.unibo.arces.wot.sepa.apps.alarmgenerator.model;
 
 import java.util.Properties;
 import javax.mail.Message;
@@ -18,21 +21,56 @@ import javax.mail.internet.MimeMessage;
  */
 public class Email {
     
+    /**
+     * The email address of the addressee.
+     */
     private String addressee = "edocarra012@gmail.com";
-    private String subject = "ARCES SAPA SENSOR ALARM";
+    /**
+     * The subject of the Email.
+     */
+    private String subject = "ARCES SEPA SENSOR ALARM";
+    /**
+     * The name of the sensor which generates the alarm.
+     */
     private String sensorKey = "sensor";
+    /**
+     * The body of the email.
+     */
     private String body = "The SAPA alarm system is warning you,<br>"+ sensorKey
             + " has exceed the limit threshold, pay attention.";
+    /*
+     * Email attributes. 
+     */
     private Properties mailServerProperties;
     private Session getMailSession;
     private MimeMessage generateMailMessage;
     
+    /**
+     * The email address of the sender.
+     */
     private String sender = "edocarra012@gmail.com";
+    /**
+     * The password of email sender account.
+     */
     private String password = "******";
+    /**
+     * For not repeating the password.
+     */
+    private boolean sent = false;
+    /**
+     * HIGH GRAVITY, the sensor exceeds in this moment the threshold.
+     */
+    public static final int gravityHIGHKEY = 3;
+    /**
+     * MIDDLE GRAVITY, the sensor will exceed soon the threshold.
+     */
+    public static final int gravityMIDDLEKEY = 2;
+    /**
+     * working in progress.
+     */
+    public static final int gravityLOWKEY = 1;
     
-    public static final int gravityHIGHKEY =3;
-    public static final int gravityMIDDLEKEY =2;
-    public static final int gravityLOWKEY =1;
+    public static final int noGravityKEY = 0;
     
     private final String gravityHIGH = sensorKey
             + " has exceeded the limit threshold, pay attention.";
@@ -42,7 +80,13 @@ public class Email {
             + " there something strange, it was noticed a variation of the datas"
             + ", pay attention.";
     
-    
+    /**
+     * 
+     * @param addressee The email address of the addressee. 
+     * @param subject The subject of the email.
+     * @param body The body of the email.
+     * @param sensorKey the name of the sensor.
+     */
     public Email(String addressee, String subject, String body,
             String sensorKey) {
         this.addressee = addressee;
@@ -50,14 +94,21 @@ public class Email {
         this.body = body;
     }
     
+    /**
+     * 
+     * @param sensorKey the name of the sensor.
+     */
     public Email(String sensorKey) {
         this.sensorKey = sensorKey;
     }
     
-    
+    /**
+     * The email will be sent with generic parameters.
+     */
     public Email() {}
 
     public void sendEmail(int gravityKey){
+            if(sent) return;
         // Step1
 		System.out.println("\n 1st ===> setup Mail Server Properties..");
 		mailServerProperties = System.getProperties();
@@ -73,7 +124,7 @@ public class Email {
 		try{
                     generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(addressee));
                     generateMailMessage.setSubject(subject);
-                    switch(gravityKey){
+                    switch(gravityKey){//control the key and then choose the email body
                         case gravityHIGHKEY:
                             generateMailMessage.setContent(gravityHIGH, "text/html");
                             break;
@@ -97,6 +148,7 @@ public class Email {
                     transport.connect("smtp.gmail.com", sender, password);
                     transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
                     transport.close();
+                    sent  = true;
                 }catch(MessagingException ex){
                     ex.printStackTrace();
                 }
@@ -149,6 +201,4 @@ public class Email {
     public String getSender() {
         return sender;
     }
-    
-    
 }
