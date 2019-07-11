@@ -1,7 +1,8 @@
 <div align="center">
-  <h1>ALARM GNERATOR</h1>
+  <h1>ALARM GENERATOR</h1>
 </div>
 How to use it:<br>
+Add to your project the three libraries inside /interpolation/lib/.
 1)Import the library:<br>
 
   ```java
@@ -15,8 +16,8 @@ How to use it:<br>
     myEmail.setSender("my gmail account");
     myEmail.setPassword("my gmail account password");
   ```
-  Remember to allow to the less secure apps to enter inside your gmail account.(gmail guide: https://support.google.com/accounts/answer/6010255?hl=it)
- 
+  Remember to allow the [less secure apps](https://support.google.com/accounts/answer/6010255?hl=it) permission
+ to enter inside your gmail account. <br>
 3)Create an Alarm object:
 
 ```java
@@ -36,11 +37,18 @@ How to use it:<br>
  ```java
  myAlarm.disablePrediction();
  ```
+ Now the system controls the value of every measure in the same moment that it arrives.
  
+ 4)Create a SubscriptionAlarmGenerator object and run inside:
+ ```java
+ String topic = "the topic of your sensor"
+ SubscriptionAlarmGenerator sag = new SubscriptionAlarmGenerator(topic, myAlarm);
+ Thread alarmGenerator = new Thread(sag);
+ alarmGenerator.start();//start the loop listener on the topic of your sensor
+ ```
+ It's also possible create several alarms generator, on the same machine listening on different sensor, at the same time!!
  
- 
- 
- 
- 
- 
+ <br><br><br>
+ developed by Edoardo Carrà in collaboration with [ARCES](http://www.arces.unibo.it), the *Advanced Research Center on Electronic    
+ Systems "Ercole De Castro"* of the [University of Bologna](http://www.unibo.it).
  
