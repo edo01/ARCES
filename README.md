@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>ALARM GNERATOR</h1>
+  <h1>ALARM GENERATOR</h1>
 </div>
 How to use it:<br>
 1)Import the library:<br>
@@ -36,11 +36,18 @@ How to use it:<br>
  ```java
  myAlarm.disablePrediction();
  ```
+ Now the system controls the value of every measure in the same moment that it arrives.
  
+ 4)Create a SubscriptionAlarmGenerator object and run inside:
+ ```java
+ String topic = "the topic of your sensor"
+ SubscriptionAlarmGenerator sag = new SubscriptionAlarmGenerator(topic, myAlarm);
+ Thread alarmGenerator = new Thread(sag);
+ alarmGenerator.start();//start the loop listener on the topic of your sensor
+ ```
+ It's also possible create several alarms generator, on the same machine listening on different sensor, at the same time!!
  
- 
- 
- 
- 
- 
- 
+ <br><br><br>
+ <div align="right">
+  developed by Edoardo Carrà in collaboration with [**ARCES**](http://www.arces.unibo.it), the *Advanced Research Center on Electronic Systems "Ercole De Castro"* of the [**University of Bologna**](http://www.unibo.it).
+ </div>
