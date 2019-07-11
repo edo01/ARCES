@@ -92,8 +92,17 @@ public class Email {
         this.addressee = addressee;
         this.subject = subject;
         this.body = body;
+        this.sensorKey = sensorKey;
     }
-    
+    /**
+     * 
+     * @param addressee The email address of the addressee. 
+     * @param sensorKey the name of the sensor.
+     */
+    public Email(String addressee,String sensorKey) {
+        this.addressee = addressee;
+        this.sensorKey = sensorKey;
+    }
     /**
      * 
      * @param sensorKey the name of the sensor.
