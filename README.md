@@ -16,8 +16,8 @@ Add to your project the three libraries inside /interpolation/lib/.
     myEmail.setSender("my gmail account");
     myEmail.setPassword("my gmail account password");
   ```
-  Remember to allow to the less secure apps to enter inside your gmail account.(gmail guide: https://support.google.com/accounts/answer/6010255?hl=it)
- 
+  Remember to allow to the [less secure apps] (https://support.google.com/accounts/answer/6010255?hl=it)
+ to enter inside your gmail account. <br>
 3)Create an Alarm object:
 
 ```java
