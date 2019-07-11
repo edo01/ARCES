@@ -49,5 +49,5 @@ How to use it:<br>
  
  <br><br><br>
  <div align="right">
-  developed by Edoardo Carrà in collaboration with @[**ARCES**](http://www.arces.unibo.it), the *Advanced Research Center on Electronic Systems "Ercole De Castro"* of the [**University of Bologna**](http://www.unibo.it).
+  developed by Edoardo Carrà in collaboration with [**ARCES**](http://www.arces.unibo.it), the *Advanced Research Center on Electronic Systems "Ercole De Castro"* of the [**University of Bologna**](http://www.unibo.it).
  </div>
