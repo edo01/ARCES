@@ -38,6 +38,10 @@ public class Alarm {
      */
     private boolean up = true;
     /**
+     * If you want the prediction.
+     */
+    private boolean withPrediction = true;
+    /**
      * The point which in the case of exceeding of threshold generates the
      * alarm.
      */
@@ -102,6 +106,10 @@ public class Alarm {
         }
     }
 
+    public void update(){
+        
+    }
+    
     /**
      *
      * @param threshold The Threshold value which won't never be exceeded.
@@ -172,7 +180,7 @@ public class Alarm {
     }
     
     //the value is higher than threshold now.
-    private boolean firstGradeAlarm(double num) {
+    boolean firstGradeAlarm(double num) {
         if (up) {
             if (num > threshold) {
                 System.out.println("ALARM OF FIRST GRADE, sending email...");
@@ -206,7 +214,19 @@ public class Alarm {
         }
         return false;
     }
-
+    
+    public boolean isWithPrediction(){
+        return withPrediction;
+    }
+    
+    public void ablePrediction(){
+        withPrediction = true;
+    }
+    
+    public void disablePredicition(){
+        withPrediction = false;
+    }
+    
     public int getRange() {
         return range;
     }

@@ -64,7 +64,6 @@ public class SubscriptionAlarmGenerator implements Runnable{
     @Override
     public void run() {
             String clientId     = "Alarm for "+topic;
-
             try {
                 MqttClient sampleClient = new MqttClient(broker, clientId, new MemoryPersistence());
                 MqttConnectOptions connOpts = new MqttConnectOptions();
